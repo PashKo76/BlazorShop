@@ -1,0 +1,7 @@
+{
+    "Name": "test1",
+    "ShortDescription": "interesting text about 1",
+    "Categories": [ "test category 1", "test category 3" ],
+    "Description": "full text about product 1",
+    "Price": 1
+}

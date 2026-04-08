@@ -1,0 +1,37 @@
+﻿@page "/product/{MyProdId:int}"
+
+<h1>@actualProd.Name</h1>
+
+<p>
+	@foreach(var c in actualProd.Categories)
+	{
+		@c
+	}
+</p>
+
+<img href ="" />
+
+<p>@actualProd.ShortDescription</p>
+
+<p>@actualProd.Description</p>
+
+<a href="/review/@MyProdId"><p>Add my review!</p></a>
+
+@foreach(var rev in reviews)
+{
+	<p>@rev</p>
+}
+
+@code {
+	[Parameter]
+	public int MyProdId { get; init; } = 0;
+	Product actualProd = Program.PlaceHolder.Product;
+	LinkedList<string> reviews = Program.PlaceHolder.Reviews;
+	protected override async Task OnInitializedAsync()
+	{
+		var raw = Program.products;
+		actualProd = raw[MyProdId].Product;
+		reviews = raw[MyProdId].Reviews;
+		await Task.Delay(0);
+	}
+}

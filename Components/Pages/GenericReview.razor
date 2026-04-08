@@ -1,0 +1,33 @@
+﻿@page "/review/{MyProdId:int}"
+<p>If you want to write a review you must know about AI moderation</p>
+<a href="/product/@MyProdId"><p>I am writing about this product</p></a>
+
+@if (sended)
+{
+	<p>Done! Thank you for your opinion!</p>
+}
+else
+{
+	<EditForm Model="@this" OnSubmit="Send">
+		<p>
+			<InputTextArea @bind-Value="reviewText">
+
+			</InputTextArea>
+		</p>
+		<p>
+			<button type="submit">Submit</button>
+		</p>
+	</EditForm>
+}
+@code {
+	[Parameter]
+	public int MyProdId { get; init; } = 0;
+	bool sended = false;
+	string? reviewText = null;
+	void Send()
+	{
+		if (string.IsNullOrWhiteSpace(reviewText)) return;
+		sended = true;
+		Program.SendToCheck(reviewText, MyProdId);
+	}
+}

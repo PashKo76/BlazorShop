@@ -1,0 +1,36 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+<article>
+	<p>Hello, welcome to main page, select some filters please.</p>
+	<p>
+		<InputSelect @bind-Value="Filter">
+			@foreach(var cat in Program.categories)
+			{
+				<option value ="@cat">@cat</option>
+			}
+		</InputSelect>
+
+	</p>
+	<p>@Filter</p>
+</article>
+<article>
+	@foreach(var pr in GetProducts())
+	{
+		<article>
+			<a href="/product/@pr.Id"><h2>@pr.Product.Name</h2></a>
+			<p>Price: @pr.Product.Price $</p>
+			<p>@pr.Product.ShortDescription</p>
+			<p>Total amount of reviews: @pr.Reviews.Count</p>
+		</article>
+	}
+</article>
+
+@code{
+	string Filter = "none";
+	List<WebProduct> GetProducts()
+	{
+		string filter = new string(Filter);
+		return Program.products.FindAll((a) => a.Product.Categories.Contains(filter));
+	}
+}
